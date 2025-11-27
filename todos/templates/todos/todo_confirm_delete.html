@@ -1,0 +1,18 @@
+{% extends 'todos/base.html' %}
+
+{% block content %}
+<h2 class="text-center" style="color: var(--primary-color);">Delete Task?</h2>
+
+<div class="text-center">
+    <p>Are you sure you want to delete "{{ object.title }}"?</p>
+    <p>This action cannot be undone!</p>
+
+    <div class="mt-4">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" style="background-color: #ff4444;">Yes, Delete</button>
+            <a href="{% url 'todo_list' %}" class="btn">No, Keep it</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
