@@ -76,16 +76,18 @@ WSGI_APPLICATION = 'todo_project.wsgi.application'
 
 import dj_database_url
 
-# Use PostgreSQL on Vercel, SQLite locally
-if os.environ.get('POSTGRES_URL'):
+# Check if we're on Vercel (has POSTGRES_URL or VERCEL env var)
+if os.environ.get('POSTGRES_URL') or os.environ.get('VERCEL'):
+    # Use PostgreSQL on Vercel
     DATABASES = {
         'default': dj_database_url.config(
-            default=os.environ.get('POSTGRES_URL'),
+            default=os.environ.get('POSTGRES_URL', 'postgres://localhost/pixiee'),
             conn_max_age=600,
             conn_health_checks=True,
         )
     }
 else:
+    # Use SQLite locally
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
